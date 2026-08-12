@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  pending
+  paid
+  cancelled
+}
+
+model Product {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(120)
+  description    String      @db.Text
+  price          Decimal     @db.Decimal(10, 2)
+  category       String      @db.VarChar(60)
+  image_filename String      @map("image_filename") @db.VarChar(255)
+  order_items    OrderItem[]
+  created_at     DateTime    @default(now()) @map("created_at")
+  updated_at     DateTime    @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@map("products")
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  total_amount Decimal     @map("total_amount") @db.Decimal(10, 2)
+  status       OrderStatus @default(pending)
+  created_at   DateTime    @default(now()) @map("created_at")
+  items        OrderItem[]
+
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  order_id   Int     @map("order_id")
+  product_id Int     @map("product_id")
+  quantity   Int
+  unit_price Decimal @map("unit_price") @db.Decimal(10, 2)
+
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@index([order_id])
+  @@index([product_id])
+  @@map("order_items")
+}

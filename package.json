@@ -1,0 +1,21 @@
+{
+  "name": "web-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-Service Checkout Web App",
+  "scripts": {
+    "docker-up": "docker compose up --build -d",
+    "docker-up:logs": "docker compose up --build",
+    "docker-down": "docker compose down",
+    "docker-down:wipe": "docker compose down -v",
+    "docker-logs": "docker compose logs -f",
+    "docker-logs:backend": "docker compose logs -f backend",
+    "docker-ps": "docker compose ps",
+    "docker-rebuild": "docker compose up --build -d --force-recreate",
+    "backend:dev": "npm run dev --prefix backend",
+    "backend:build": "npm run build --prefix backend",
+    "backend:seed": "npm run seed --prefix backend",
+    "backend:db:push": "npm run db:push --prefix backend",
+    "backend:studio": "npm run db:studio --prefix backend"
+  }
+}
