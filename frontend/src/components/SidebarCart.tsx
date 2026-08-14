@@ -37,6 +37,14 @@ export function SidebarCart() {
         ) : (
           items.map((item) => (
             <div key={item.id} className="flex flex-col xl:flex-row xl:items-center bg-white p-2 md:p-3 mb-2 md:mb-3 rounded-lg shadow-sm">
+              <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 mr-3 mb-2 xl:mb-0 bg-white rounded-md overflow-hidden">
+                <img 
+                  src={`/images/${item.image_filename}`} 
+                  alt={item.name}
+                  className="w-full h-full object-contain mix-blend-multiply"
+                  draggable={false}
+                />
+              </div>
               <div className="flex-1 mb-2 xl:mb-0">
                 <h4 className="m-0 mb-1 text-xs md:text-base font-bold truncate">{item.name}</h4>
                 <div className="font-bold text-sm md:text-base">{formatPrice(item.price * item.quantity)}</div>

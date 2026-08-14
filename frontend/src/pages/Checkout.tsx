@@ -39,13 +39,6 @@ export function Checkout() {
     }
   };
 
-  // Se o carrinho ficar vazio na tela de checkout, volta pro menu
-  if (items.length === 0 && !orderSuccess) {
-    navigate('/menu');
-    return null;
-  }
-
-  // Se o carrinho ficar vazio na tela de checkout, volta pro menu
   if (items.length === 0 && !orderSuccess) {
     navigate('/menu');
     return null;
