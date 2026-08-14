@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mcd-red: #da291c;
+  --color-mcd-yellow: #ffc72c;
+  --color-mcd-green: #00a300;
+  --color-mcd-gray-light: #f5f5f5;
+  --color-mcd-gray: #f9f9f9;
+  --color-mcd-border: #eee;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Remove scrollbars para dar um aspecto de totem */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
