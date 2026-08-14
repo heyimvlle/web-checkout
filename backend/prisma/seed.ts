@@ -14,28 +14,28 @@ const products: SeedProduct[] = [
   // Burgers
   {
     name: 'Classic Burger',
-    description: 'Hambúrguer artesanal com queijo, alface, tomate e molho da casa.',
+    description: 'Artisan burger with cheese, lettuce, tomato, and house sauce.',
     price: 28.9,
     category: 'Burgers',
     image_filename: 'classic-burger.png',
   },
   {
     name: 'Double Bacon',
-    description: 'Dois smash burgers, queijo cheddar e bacon crocante.',
+    description: 'Two smash burgers, cheddar cheese, and crispy bacon.',
     price: 36.9,
     category: 'Burgers',
     image_filename: 'double-bacon.png',
   },
   {
     name: 'Chicken Crispy',
-    description: 'Filé de frango empanado, maionese temperada e salada fresca.',
+    description: 'Breaded chicken fillet, seasoned mayo, and fresh salad.',
     price: 27.5,
     category: 'Burgers',
     image_filename: 'chicken-crispy.png',
   },
   {
     name: 'Veggie Delight',
-    description: 'Burger plant-based com queijo vegano e molho especial.',
+    description: 'Plant-based burger with vegan cheese and special sauce.',
     price: 29.9,
     category: 'Burgers',
     image_filename: 'veggie-delight.png',
@@ -43,22 +43,22 @@ const products: SeedProduct[] = [
 
   // Sides
   {
-    name: 'Batata Frita',
-    description: 'Porção média de batatas fritas crocantes.',
+    name: 'French Fries',
+    description: 'Medium portion of crispy french fries.',
     price: 12.9,
     category: 'Sides',
     image_filename: 'fries.png',
   },
   {
     name: 'Onion Rings',
-    description: 'Anéis de cebola empanados e dourados.',
+    description: 'Breaded and golden onion rings.',
     price: 14.9,
     category: 'Sides',
     image_filename: 'onion-rings.png',
   },
   {
-    name: 'Nuggets (6un)',
-    description: 'Seis nuggets de frango com molho barbecue.',
+    name: 'Chicken Nuggets (6pc)',
+    description: 'Six chicken nuggets with barbecue sauce.',
     price: 16.5,
     category: 'Sides',
     image_filename: 'nuggets.png',
@@ -66,22 +66,22 @@ const products: SeedProduct[] = [
 
   // Drinks
   {
-    name: 'Refrigerante 500ml',
-    description: 'Refrigerante gelado — cola, guaraná ou limão.',
+    name: 'Soda 500ml',
+    description: 'Cold soda — cola, guarana, or lemon.',
     price: 8.9,
     category: 'Drinks',
     image_filename: 'soda.png',
   },
   {
-    name: 'Suco Natural',
-    description: 'Suco de laranja ou limão feito na hora.',
+    name: 'Natural Juice',
+    description: 'Freshly squeezed orange or lemon juice.',
     price: 11.9,
     category: 'Drinks',
     image_filename: 'juice.png',
   },
   {
     name: 'Milkshake',
-    description: 'Milkshake cremoso de chocolate, morango ou baunilha.',
+    description: 'Creamy chocolate, strawberry, or vanilla milkshake.',
     price: 15.9,
     category: 'Drinks',
     image_filename: 'milkshake.png',
@@ -90,21 +90,21 @@ const products: SeedProduct[] = [
   // Desserts
   {
     name: 'Sundae',
-    description: 'Sorvete com calda de chocolate ou caramelo.',
+    description: 'Ice cream with chocolate or caramel syrup.',
     price: 9.9,
     category: 'Desserts',
     image_filename: 'sundae.png',
   },
   {
     name: 'Brownie',
-    description: 'Brownie quente com cobertura de chocolate belga.',
+    description: 'Warm brownie with Belgian chocolate topping.',
     price: 13.5,
     category: 'Desserts',
     image_filename: 'brownie.png',
   },
   {
     name: 'Cookie Duo',
-    description: 'Dois cookies crocantes com gotas de chocolate.',
+    description: 'Two crispy chocolate chip cookies.',
     price: 10.9,
     category: 'Desserts',
     image_filename: 'cookie-duo.png',
