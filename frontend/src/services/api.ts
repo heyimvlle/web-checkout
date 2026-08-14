@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// A URL da API vem da variável de ambiente definida pelo Vite
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const api = axios.create({
@@ -10,7 +9,6 @@ export const api = axios.create({
   },
 });
 
-// Exemplo de funções do serviço
 export const fetchProducts = async () => {
   const response = await api.get('/products');
   return response.data;

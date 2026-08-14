@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
 import { useState } from 'react';
 import { api } from '../services/api';
+import { Trash2, Plus, Minus } from 'lucide-react';
 
 export function Checkout() {
-  const { items, getTotalPrice, clearCart } = useCartStore();
+  const { items, getTotalPrice, clearCart, incrementQuantity, decrementQuantity, removeItem } = useCartStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
@@ -38,6 +39,18 @@ export function Checkout() {
     }
   };
 
+  // Se o carrinho ficar vazio na tela de checkout, volta pro menu
+  if (items.length === 0 && !orderSuccess) {
+    navigate('/menu');
+    return null;
+  }
+
+  // Se o carrinho ficar vazio na tela de checkout, volta pro menu
+  if (items.length === 0 && !orderSuccess) {
+    navigate('/menu');
+    return null;
+  }
+
   if (orderSuccess) {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-mcd-green text-white select-none p-4 text-center">
@@ -64,24 +77,40 @@ export function Checkout() {
       </div>
 
       <div className="flex-1 flex flex-col lg:flex-row p-4 md:p-10 gap-4 md:gap-10 overflow-y-auto">
-        {/* Resumo do Pedido */}
         <div className="flex-1 lg:flex-[2] bg-white rounded-xl md:rounded-[20px] p-6 md:p-10 shadow-[0_4px_15px_rgba(0,0,0,0.05)] overflow-y-auto shrink-0 min-h-[300px]">
           <h2 className="text-xl md:text-3xl border-b-2 border-gray-200 pb-3 md:pb-5 mb-4 md:mb-8 font-bold">Order Summary</h2>
           
           {items.map(item => (
-            <div key={item.id} className="flex justify-between items-center text-base md:text-2xl border-b border-gray-100 py-3 md:py-5">
-              <div className="truncate pr-4 flex-1">
-                <span className="font-bold mr-2 md:mr-4">{item.quantity}x</span>
+            <div key={item.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-base md:text-2xl border-b border-gray-100 py-4 md:py-6 gap-4">
+              <div className="truncate pr-4 flex-1 w-full sm:w-auto font-medium">
                 {item.name}
               </div>
-              <div className="font-bold shrink-0">
-                {formatPrice(item.price * item.quantity)}
+              
+              <div className="flex items-center justify-between w-full sm:w-auto gap-4 md:gap-8">
+                <div className="flex items-center gap-3 md:gap-5">
+                  <button 
+                    onClick={() => item.quantity > 1 ? decrementQuantity(item.id) : removeItem(item.id)}
+                    className="p-2 md:p-3 text-lg md:text-2xl rounded-full border-none bg-gray-100 cursor-pointer active:scale-95 transition-transform flex items-center justify-center"
+                  >
+                    {item.quantity > 1 ? <Minus size={24} className="md:w-7 md:h-7" /> : <Trash2 size={24} className="text-red-600 md:w-7 md:h-7" />}
+                  </button>
+                  <span className="text-xl md:text-3xl font-bold w-6 md:w-8 text-center">{item.quantity}</span>
+                  <button 
+                    onClick={() => incrementQuantity(item.id)}
+                    className="p-2 md:p-3 text-lg md:text-2xl rounded-full border-none bg-gray-100 cursor-pointer active:scale-95 transition-transform flex items-center justify-center"
+                  >
+                    <Plus size={24} className="md:w-7 md:h-7" />
+                  </button>
+                </div>
+
+                <div className="font-bold text-xl md:text-3xl shrink-0 w-[120px] md:w-[150px] text-right">
+                  {formatPrice(item.price * item.quantity)}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Pagamento */}
         <div className="flex-1 bg-white rounded-xl md:rounded-[20px] p-6 md:p-10 shadow-[0_4px_15px_rgba(0,0,0,0.05)] flex flex-col shrink-0 min-h-[300px]">
           <h2 className="text-xl md:text-3xl border-b-2 border-gray-200 pb-3 md:pb-5 mb-4 md:mb-8 font-bold">Total to Pay</h2>
           

@@ -45,14 +45,10 @@ services:
     container_name: web-checkout-frontend
     restart: unless-stopped
     volumes:
-      # Mapeia a pasta local /frontend para /app dentro do contêiner
       - ./frontend:/app
-      # Evita que a pasta node_modules local sobrescreva a do contêiner (já que os SOs podem ser diferentes)
       - /app/node_modules
     environment:
-      # URL acessada pelo browser do cliente (deve apontar para localhost na máquina host ou IP público)
       - VITE_API_URL=http://localhost:3001
-      # Força o Vite a usar polling (ótimo para funcionar o Hot Reload em contêineres e sistemas operacionais variados)
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
     ports:

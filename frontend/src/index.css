@@ -24,7 +24,6 @@ html, body, #root {
   box-sizing: border-box;
 }
 
-/* Remove scrollbars para dar um aspecto de totem */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
