@@ -36,8 +36,8 @@ export function SidebarCart() {
           <p className="text-center text-xs md:text-base text-gray-400 mt-12">Your cart is empty</p>
         ) : (
           items.map((item) => (
-            <div key={item.id} className="flex flex-col xl:flex-row xl:items-center bg-white p-2 md:p-3 mb-2 md:mb-3 rounded-lg shadow-sm">
-              <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 mr-3 mb-2 xl:mb-0 bg-white rounded-md overflow-hidden">
+            <div key={item.id} className="flex items-center bg-white p-2 md:p-3 mb-2 md:mb-3 rounded-lg shadow-sm gap-2">
+              <div className="w-10 h-10 md:w-16 md:h-16 shrink-0 bg-white rounded-md overflow-hidden">
                 <img 
                   src={`/images/${item.image_filename}`} 
                   alt={item.name}
@@ -45,22 +45,22 @@ export function SidebarCart() {
                   draggable={false}
                 />
               </div>
-              <div className="flex-1 mb-2 xl:mb-0">
-                <h4 className="m-0 mb-1 text-xs md:text-base font-bold truncate">{item.name}</h4>
+              <div className="flex-1 min-w-0">
+                <h4 className="m-0 mb-1 text-sm md:text-base font-bold truncate leading-tight">{item.name}</h4>
                 <div className="font-bold text-sm md:text-base">{formatPrice(item.price * item.quantity)}</div>
               </div>
               
-              <div className="flex items-center gap-2 md:gap-4 justify-between xl:justify-end w-full xl:w-auto">
+              <div className="flex items-center gap-1 md:gap-3 shrink-0">
                 <button 
                   onClick={() => item.quantity > 1 ? decrementQuantity(item.id) : removeItem(item.id)}
-                  className="p-1 md:p-2 text-sm md:text-xl rounded-full border-none bg-gray-200 cursor-pointer active:scale-95 transition-transform"
+                  className="p-1 md:p-2 text-sm md:text-xl rounded-full border-none bg-gray-200 cursor-pointer active:scale-95 transition-transform flex items-center justify-center"
                 >
                   {item.quantity > 1 ? <Minus size={16} className="md:w-5 md:h-5" /> : <Trash2 size={16} className="text-red-600 md:w-5 md:h-5" />}
                 </button>
-                <span className="text-sm md:text-xl font-bold w-4 text-center">{item.quantity}</span>
+                <span className="text-sm md:text-lg font-bold w-4 md:w-6 text-center">{item.quantity}</span>
                 <button 
                   onClick={() => incrementQuantity(item.id)}
-                  className="p-1 md:p-2 text-sm md:text-xl rounded-full border-none bg-gray-200 cursor-pointer active:scale-95 transition-transform"
+                  className="p-1 md:p-2 text-sm md:text-xl rounded-full border-none bg-gray-200 cursor-pointer active:scale-95 transition-transform flex items-center justify-center"
                 >
                   <Plus size={16} className="md:w-5 md:h-5" />
                 </button>
