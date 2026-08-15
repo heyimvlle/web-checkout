@@ -22,7 +22,6 @@ export function Checkout() {
         items: items.map(item => ({ product_id: item.id, quantity: item.quantity })),
         total: getTotalPrice()
       });
-      // A API retorna um id numérico, adaptamos para ficar legível no painel
       setOrderNumber(response.data.id.toString().padStart(3, '0'));
       setOrderSuccess(true);
       clearCart();
@@ -32,8 +31,8 @@ export function Checkout() {
       }, 5000);
       
     } catch (error) {
-      console.error("Erro ao finalizar pedido", error);
-      alert("Ocorreu um erro ao processar seu pagamento. Tente novamente.");
+      console.error("Error processing order", error);
+      alert("An error occurred while processing your payment. Please try again.");
     } finally {
       setIsProcessing(false);
     }
