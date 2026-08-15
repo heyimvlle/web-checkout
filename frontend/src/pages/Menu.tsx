@@ -8,28 +8,30 @@ import { api } from '../services/api';
 export function Menu() {
   const [categories, setCategories] = useState<string[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>('');
+  const [bestsellers, setBestsellers] = useState<Product[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>('🔥 Bestsellers');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [categoriesRes, productsRes] = await Promise.all([
+        const [categoriesRes, productsRes, bestsellersRes] = await Promise.all([
           api.get('/products/categories'),
-          api.get('/products')
+          api.get('/products'),
+          api.get('/products/bestsellers')
         ]);
-        setCategories(categoriesRes.data);
+        setCategories(['🔥 Bestsellers', ...categoriesRes.data]);
         setProducts(productsRes.data);
-        if (categoriesRes.data.length > 0) {
-          setActiveCategory(categoriesRes.data[0]);
-        }
+        setBestsellers(bestsellersRes.data);
       } catch (error) {
-        console.error("Erro ao carregar dados", error);
+        console.error("Error loading data", error);
       }
     };
     fetchData();
   }, []);
 
-  const activeProducts = products.filter(p => p.category === activeCategory);
+  const activeProducts = activeCategory === '🔥 Bestsellers' 
+    ? bestsellers 
+    : products.filter(p => p.category === activeCategory);
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-mcd-gray-light">

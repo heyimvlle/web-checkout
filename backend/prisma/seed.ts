@@ -133,6 +133,86 @@ async function main() {
     data: products,
   });
 
+  const allProducts = await prisma.product.findMany();
+  const classicBurger = allProducts.find(p => p.name === 'Classic Burger');
+  const doubleBacon = allProducts.find(p => p.name === 'Double Bacon');
+  const chickenCrispy = allProducts.find(p => p.name === 'Chicken Crispy');
+  const veggieDelight = allProducts.find(p => p.name === 'Veggie Delight');
+  
+  const fries = allProducts.find(p => p.name === 'French Fries');
+  const soda = allProducts.find(p => p.name === 'Soda 500ml');
+  const onionRings = allProducts.find(p => p.name === 'Onion Rings');
+  const naturalJuice = allProducts.find(p => p.name === 'Natural Juice');
+
+  if (classicBurger && doubleBacon && chickenCrispy && veggieDelight && fries && soda && onionRings && naturalJuice) {
+    for (let i = 0; i < 20; i++) {
+      const items = [];
+      
+      if (i < 5) {
+        // Classic Burger + Fries
+        items.push({
+          product_id: classicBurger.id,
+          quantity: 1,
+          unit_price: classicBurger.price,
+        });
+        items.push({
+          product_id: fries.id,
+          quantity: 1,
+          unit_price: fries.price,
+        });
+      } else if (i < 10) {
+        // Double Bacon + Soda
+        items.push({
+          product_id: doubleBacon.id,
+          quantity: 1,
+          unit_price: doubleBacon.price,
+        });
+        items.push({
+          product_id: soda.id,
+          quantity: 2,
+          unit_price: soda.price,
+        });
+      } else if (i < 15) {
+        // Chicken Crispy + Onion Rings
+        items.push({
+          product_id: chickenCrispy.id,
+          quantity: 1,
+          unit_price: chickenCrispy.price,
+        });
+        items.push({
+          product_id: onionRings.id,
+          quantity: 1,
+          unit_price: onionRings.price,
+        });
+      } else {
+        // Veggie Delight + Natural Juice
+        items.push({
+          product_id: veggieDelight.id,
+          quantity: 1,
+          unit_price: veggieDelight.price,
+        });
+        items.push({
+          product_id: naturalJuice.id,
+          quantity: 1,
+          unit_price: naturalJuice.price,
+        });
+      }
+
+      const totalAmount = items.reduce((acc, item) => acc + (Number(item.unit_price) * item.quantity), 0);
+
+      await prisma.order.create({
+        data: {
+          total_amount: totalAmount,
+          status: 'paid',
+          items: {
+            create: items,
+          },
+        },
+      });
+    }
+    console.log('✅ Seeded 20 simulated orders for Upsell Engine.');
+  }
+
   const categories = [...new Set(products.map((p) => p.category))];
 
   console.log(`✅ Seeded ${created.count} products`);
