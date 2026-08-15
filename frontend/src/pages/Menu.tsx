@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AlertTriangle } from 'lucide-react';
 import { CategoryMenu } from '../components/CategoryMenu';
 import { ProductCard } from '../components/ProductCard';
 import { SidebarCart } from '../components/SidebarCart';
@@ -10,24 +11,60 @@ export function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
   const [bestsellers, setBestsellers] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('🔥 Bestsellers');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasError, setHasError] = useState<boolean>(false);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    setHasError(false);
+    try {
+      const [categoriesRes, productsRes, bestsellersRes] = await Promise.all([
+        api.get('/products/categories'),
+        api.get('/products'),
+        api.get('/products/bestsellers')
+      ]);
+      setCategories(['🔥 Bestsellers', ...categoriesRes.data]);
+      setProducts(productsRes.data);
+      setBestsellers(bestsellersRes.data);
+    } catch (error) {
+      console.error("Error loading data", error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [categoriesRes, productsRes, bestsellersRes] = await Promise.all([
-          api.get('/products/categories'),
-          api.get('/products'),
-          api.get('/products/bestsellers')
-        ]);
-        setCategories(['🔥 Bestsellers', ...categoriesRes.data]);
-        setProducts(productsRes.data);
-        setBestsellers(bestsellersRes.data);
-      } catch (error) {
-        console.error("Error loading data", error);
-      }
-    };
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-screen flex justify-center items-center bg-mcd-gray-light">
+        <div className="animate-spin rounded-full h-24 w-24 border-t-8 border-b-8 border-mcd-red"></div>
+      </div>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <div className="h-screen w-screen flex flex-col justify-center items-center bg-mcd-gray-light text-center p-8 select-none">
+        <AlertTriangle className="text-mcd-red w-32 h-32 mb-8" />
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          Terminal Temporarily Unavailable
+        </h1>
+        <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl">
+          Please head to the counter to place your order. We apologize for the inconvenience.
+        </p>
+        <button
+          onClick={fetchData}
+          className="px-12 py-6 bg-mcd-red text-white text-2xl font-bold rounded-2xl active:scale-95 transition-transform border-none cursor-pointer"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   const activeProducts = activeCategory === '🔥 Bestsellers' 
     ? bestsellers 

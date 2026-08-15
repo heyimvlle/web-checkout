@@ -10,6 +10,7 @@ export function Checkout() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
@@ -17,6 +18,7 @@ export function Checkout() {
 
   const handlePayment = async () => {
     setIsProcessing(true);
+    setPaymentError(null);
     try {
       const response = await api.post('/orders', {
         items: items.map(item => ({ product_id: item.id, quantity: item.quantity })),
@@ -32,7 +34,11 @@ export function Checkout() {
       
     } catch (error) {
       console.error("Error processing order", error);
-      alert("An error occurred while processing your payment. Please try again.");
+      setPaymentError("Payment failed. Please try again or contact a staff member.");
+      
+      setTimeout(() => {
+        setPaymentError(null);
+      }, 5000);
     } finally {
       setIsProcessing(false);
     }
@@ -109,6 +115,12 @@ export function Checkout() {
           <div className="text-4xl md:text-5xl font-bold text-mcd-green text-center my-6 md:my-10">
             {formatPrice(getTotalPrice())}
           </div>
+
+          {paymentError && (
+            <div className="bg-red-100 text-red-700 p-4 rounded-xl text-center mb-4 font-bold text-lg md:text-xl">
+              {paymentError}
+            </div>
+          )}
 
           <button
             onClick={handlePayment}
